@@ -1,33 +1,78 @@
-import React from 'react' 
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/NotFound";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom';
 
+// Import หน้าทั้งหมดจากโฟลเดอร์ page
+import Home from './page/Home';
+import Courses from './page/Courses';
+import Instructors from './page/Instructors';
+import Profile from './page/Profile'; // เปลี่ยนตามที่แก้ไขชื่อไฟล์นะครับ
+import NotFound from './page/NotFound';
 
-
-const App = () => {
+function App() {
   return (
-   <>
-      <Router>
-        <div className='container mt-4'>
-          <nav className='mb-4'>
-            <Link to="/Home" className='btn btn-primary me-2'>Home</Link>
-            <Link to="/about" className='btn btn-primary me-2'>About</Link>
-            <Link to="/Contact" className='btn btn-primary me-2'>Contact</Link>
-          </nav>
+    <Router>
+      <div className="d-flex flex-column min-vh-100 bg-light text-dark">
+        
+        {/* Bootstrap Navbar */}
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+          <div className="container">
+            <Link className="navbar-brand fw-bold text-info" to="/">
+              CourseOnline
+            </Link>
+            
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active fw-bold text-info' : ''}`} to="/">
+                    หน้าแรก
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active fw-bold text-info' : ''}`} to="/courses">
+                    คอร์สเรียน
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active fw-bold text-info' : ''}`} to="/instructors">
+                    ผู้สอน
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active fw-bold text-info' : ''}`} to="/profile">
+                    โปรไฟล์
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
+        {/* Content Area */}
+        <main className="flex-grow-1">
           <Routes>
-            <Route path='/Home' element={<Home/>} /> 
-            <Route path='/about' element={<About/>} /> 
-            <Route path='Contact' element={<Contact/>} /> 
-            <Route path='*' element={<NotFound/>} /> 
+            <Route path="/" element={<Home />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/instructors" element={<Instructors />} />
+            <Route path="/profile" element={<Profile />} />
+            {/* ดักหน้าเว็บที่ไม่มีอยู่จริง (404) */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
-        </div>
-      </Router>
-   </>
-  )
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-dark text-white text-center py-3 mt-auto border-top border-secondary">
+          <div className="container">
+            <small>&copy; {new Date().getFullYear()} course-online-web. All Rights Reserved.</small>
+          </div>
+        </footer>
+
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
